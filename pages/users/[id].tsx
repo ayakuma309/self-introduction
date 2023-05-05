@@ -33,9 +33,17 @@ export default function UserPage() {
   return (
     <div>
       {user ? (
-        <div>
-          <p>{user.id}</p>
-          <p>{user.displayName}</p>
+        <div className="w-90 mx-auto text-center my-10">
+          {/* user が存在する場合のみに囲んだ部分の描画が行われる */}
+          {user && (
+            <div >
+              <h1 className="h4">{user.displayName}さん</h1>
+              <div className="m-5">{user.id}</div>
+            </div>
+          )}
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Button
+          </button>
         </div>
       ) : (
         <p>ロード中…</p>
