@@ -9,24 +9,25 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
-type UserState = User | null;
+type UserState = User | null; // null の場合はログインしていない状態
 const userState = atom<UserState>({
   key: "userState",
   default: null,
   dangerouslyAllowMutability: true,
 });
 
+// ログイン
 export const login = (): Promise<void> => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   return signInWithRedirect(auth, provider);
 };
-
+// ログアウト
 export const logout = (): Promise<void> => {
   const auth = getAuth();
   return signOut(auth);
 };
-
+// ユーザー情報取得
 export const useAuth = (): boolean => {
 	//5.isLoading は onAuthStateChanged() を実行中か確認するための状態
   const [isLoading, setIsLoading] = useState(true);
