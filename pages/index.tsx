@@ -21,6 +21,7 @@ const Home: NextPage = () => {
           <>
             <h2>ログインしている</h2>
             <button onClick={handleLogout}>ログアウト</button>
+            {user.uid}
           </>
         ) : (
           <>
