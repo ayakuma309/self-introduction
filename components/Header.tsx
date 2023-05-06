@@ -12,10 +12,9 @@ function Header() {
   };
   return (
     <header className="py-4 px-8 bg-white flex justify-between items-center text-black">
-      <h1 className="text-lg font-bold">アプリ名</h1>
+      <h1 className="text-lg font-bold">わたしについて</h1>
       {user ? (
         <>
-          <h2>ログインしている</h2>
           <button
             onClick={handleLogout}
             className="px-4 py-2 bg-blue-500 text-white rounded-md">
@@ -24,7 +23,6 @@ function Header() {
         </>
       ) : (
         <>
-          <h2>ログインしていない</h2>
           <button
             onClick={handleLogin}
             className="px-4 py-2 bg-blue-500 text-white rounded-md">
