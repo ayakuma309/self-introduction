@@ -5,6 +5,7 @@ import uuid from 'react-uuid';
 import { getAuth } from "firebase/auth";
 import MyPageButton from "@/components/atoms/MyPageButton";
 import { useRouter } from "next/router";
+import Layout from "@/components/Layout";
 
 
 interface Tags{
@@ -89,9 +90,10 @@ const postTagForm: NextPage = () => {
   };
 
   return (
-    <>
-      <div className="w-full max-w-xs mx-auto my-10">
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <Layout>
+      <MyPageButton>戻る</MyPageButton>
+      <div className="w-full max-w-xs mx-auto my-3">
+        <form onSubmit={handleSubmit} className="bg-white  rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label htmlFor="tags" className="block text-gray-700 font-bold mb-2">
               好きなものを保存
@@ -108,44 +110,52 @@ const postTagForm: NextPage = () => {
             <button
               type="submit"
               disabled={!tag}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-2"
             >
               追加
             </button>
           </div>
         </form>
         {/*戻るボタンの追加 */}
-        <button
-          onClick={() => addTags(tags)}
-          disabled={!tags}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-2"
-        >作成する
-        </button>
-        <MyPageButton>戻る</MyPageButton>
 
         {tags && (
-          <div className="bg-white text-black my-10">
-            <h1>追加する好きなもの</h1>
-            {tags.map((tag, index) =>(
-              <div key={index} className="text-black text-lg my-2">
-                {tag.text}
-                <button onClick={() => deleteTag(index)}>削除</button>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="bg-white text-black  rounded px-8 pt-6 pb-8 mb-4">
+              <h1 className="text-gray-700 font-bold">今から追加する好きなもの</h1>
+              {tags.map((tag, index) =>(
+                <div key={index} className="text-black text-lg my-2">
+                  {tag.text}
+                  <button onClick={() => deleteTag(index)}>削除</button>
+                </div>
+              ))}
+              <button
+                onClick={() => addTags(tags)}
+                disabled={!tags}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2"
+              >
+                作成する
+              </button>
+            </div>
+          </>
         )}
         {dbTags &&(
-          <div className="bg-white text-black my-10">
-            <h1>追加されている好きなもの</h1>
+          <div className="bg-white text-black  rounded px-8 pt-6 pb-8 mb-4">
+            <h1 className="text-gray-700 font-bold">追加されている好きなもの</h1>
             {dbTags.map((tag, index) =>(
               <div key={index} className="text-black text-lg my-2">
                 {tag.text}
-                <button onClick={() => handleDelete(tag.id)}>削除</button>
+                <button
+                  onClick={() => handleDelete(tag.id)}
+                  className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mx-2 mb-1 ease-linear transition-all duration-150" type="button"
+                >
+                  削除
+                </button>
               </div>
             ))}
           </div>
         )}
       </div>
-    </>
+    </Layout>
   );
 };
 
