@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { doc, getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
+import MyPageButton from "@/components/atoms/MyPageButton";
 
 const postTagForm: NextPage = () => {
   const auth = getAuth();
@@ -51,13 +52,7 @@ const postTagForm: NextPage = () => {
           </div>
         </form>
         {/*戻るボタンの追加 */}
-        <Link href={`/users/${currentUser?.uid}`}>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Back
-          </button>
-        </Link>
+        <MyPageButton>戻る</MyPageButton>
       </div>
     </>
   );

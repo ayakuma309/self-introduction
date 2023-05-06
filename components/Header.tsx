@@ -11,7 +11,7 @@ function Header() {
     logout().catch((error) => console.error(error));
   };
   return (
-    <header className="py-4 px-8 bg-white flex justify-between items-center">
+    <header className="py-4 px-8 bg-white flex justify-between items-center text-black">
       <h1 className="text-lg font-bold">アプリ名</h1>
       {user ? (
         <>
