@@ -5,7 +5,7 @@ import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import Tags from "@/components/Tags";
-import { TwitterShareButton,TwitterIcon } from "react-share";
+// import { TwitterShareButton,TwitterIcon } from "react-share";
 import Head from "next/head";
 
 type Query = {
@@ -117,7 +117,7 @@ export default function UserPage() {
         <meta
           property="og:image"
           key="ogImage"
-          content={`${baseUrl}/ogp.png`}
+          content="https://self-introduction-aboutme.vercel.app/ogp.png"
         />
         <meta
           name="twitter:card"
@@ -129,7 +129,7 @@ export default function UserPage() {
         <meta
           name="twitter:image"
           key="twitterImage"
-          content={encodeURI(`${baseUrl}/ogp.png`)}
+          content="https://self-introduction-aboutme.vercel.app/ogp.png"
         />
       </Head>
       {user ? (
