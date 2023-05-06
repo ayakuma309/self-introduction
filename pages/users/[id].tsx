@@ -60,8 +60,7 @@ export default function UserPage() {
             {/* user が存在する場合のみに囲んだ部分の描画が行われる */}
             {user && (
               <div >
-                <h1 className="h4">{user.displayName}さん</h1>
-                <div className="m-5">{user.id}</div>
+                <h1 className="text-2xl font-bold">{user.displayName}さん</h1>
                 {handleButtonClick()}
               </div>
             )}
