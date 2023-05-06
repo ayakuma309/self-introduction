@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import { User } from "../../types/User";
 import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import Link from "next/link";
 
 type Query = {
   id: string;
@@ -38,11 +39,13 @@ export default function UserPage() {
     //ログインしているユーザーがユーザー情報のuidと一致している場合
     if (currentUser && currentUser.uid == query.id) {
       return(
-        <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-          Button
-        </button>
+        <Link href="/postForm">
+          <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            Button
+          </button>
+        </Link>
       )
     }else{
       return null;
