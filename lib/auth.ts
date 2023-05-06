@@ -44,16 +44,13 @@ export const logout = (): Promise<void> => {
   }
 };
 // ユーザー情報取得
-export const useAuth = (): boolean => {
-	//5.isLoading は onAuthStateChanged() を実行中か確認するための状態
-  const [isLoading, setIsLoading] = useState(true);
+export const useAuth = ()=> {
   const setUser = useSetRecoilState(userState);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
-      setIsLoading(false);
       //DB保存する
       if (user) {
         const db = getFirestore();
@@ -69,8 +66,6 @@ export const useAuth = (): boolean => {
     });
     return unsubscribe;
   }, [setUser]);
-
-  return isLoading;
 };
 
 //2.useUser() はその UserState を他のコンポーネントで呼び出すための関数です.
