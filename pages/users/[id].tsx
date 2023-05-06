@@ -44,7 +44,7 @@ export default function UserPage() {
           <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-            Button
+            好きなものについて登録する
           </button>
         </Link>
       )
@@ -66,7 +66,7 @@ export default function UserPage() {
               </div>
             )}
           </div>
-          <Tags/>
+          <Tags  user={query.id}/>
         </>
       ) : (
         <p>ロード中…</p>

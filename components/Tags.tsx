@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { TagCloud } from 'react-tagcloud'
 import styles from "@/styles/post.module.css"
 import {  getFirestore, collection, onSnapshot, query } from "firebase/firestore";
-import { getAuth } from 'firebase/auth';
 
 interface Tag{
   text: string;
+}
+interface TagsProps{
+  user: string;
 }
 
 const customRenderer = (tag: any, size: any, color: any) => (
@@ -25,10 +27,8 @@ const customRenderer = (tag: any, size: any, color: any) => (
     {tag.value}
   </span>
 )
-const Tags = () => {
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
-  const [tags, settags] = useState<Tag[]>([
+const Tags = ({ user }: TagsProps) => {
+  const [tags, setTags] = useState<Tag[]>([
     {
       text: ""
     },
@@ -36,9 +36,9 @@ const Tags = () => {
 
   //tagをfirestoreから取得
   useEffect(() => {
-    if(currentUser){
+    if(user){
       const db = getFirestore();
-      const ref = collection(db, "users", currentUser.uid, "tags");
+      const ref = collection(db, "users", user, "tags");
       const q = query(ref);
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const gotTags: Tag[] = [];
@@ -47,11 +47,11 @@ const Tags = () => {
             text: doc.data().text,
         });
         });
-        settags(gotTags);
+        setTags(gotTags);
       });
       return unsubscribe;
     }
-  },[currentUser]);
+  },[user]);
 
   //tagをtagCloud用に新しく作り替える
   //スプレッド構文を使って展開し、プロパティを追加
