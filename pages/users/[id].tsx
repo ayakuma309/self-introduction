@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import {useEffect, useState} from "react";
 import { User } from "../../types/User";
 import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 type Query = {
   id: string;
@@ -11,7 +12,6 @@ export default function UserPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const query = router.query as Query;
-  const db = getFirestore();
 
   useEffect(() => {
     if (query.id === undefined) {
@@ -30,6 +30,24 @@ export default function UserPage() {
     }
     loadUser()
   }, [query.id]);
+
+  //現在ログインしているユーザーのIDを取得して、それがクエリパラメーターのIDと一致するかどうかをチェック->一致のみbutton表示
+  const handleButtonClick = () => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    //ログインしているユーザーがユーザー情報のuidと一致している場合
+    if (currentUser && currentUser.uid == query.id) {
+      return(
+        <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+          Button
+        </button>
+      )
+    }else{
+      return null;
+    }
+  }
   return (
     <div>
       {user ? (
@@ -39,11 +57,9 @@ export default function UserPage() {
             <div >
               <h1 className="h4">{user.displayName}さん</h1>
               <div className="m-5">{user.id}</div>
+              {handleButtonClick()}
             </div>
           )}
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Button
-          </button>
         </div>
       ) : (
         <p>ロード中…</p>
