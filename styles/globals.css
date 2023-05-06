@@ -15,3 +15,7 @@ body {
   background-color: black;
   color: white;
 }
+.share-button{
+  margin: 0 auto;
+  border-radius: 100px;
+}
