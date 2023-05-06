@@ -18,11 +18,13 @@
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-tagcloud": "^2.3.1",
     "recoil": "^0.7.7",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@types/react-tagcloud": "^1.1.7",
     "react-uuid": "^2.0.0"
   }
 }
