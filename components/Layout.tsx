@@ -7,7 +7,6 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div>
-      <Header/>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         {children}
       </main>
