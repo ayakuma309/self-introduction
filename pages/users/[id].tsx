@@ -5,12 +5,15 @@ import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import Tags from "@/components/Tags";
+import { TwitterShareButton,TwitterIcon } from "react-share";
+import Head from "next/head";
 
 type Query = {
   id: string;
 }
 
 export default function UserPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const query = router.query as Query;
@@ -40,6 +43,7 @@ export default function UserPage() {
     //ログインしているユーザーがユーザー情報のuidと一致している場合
     if (currentUser && currentUser.uid == query.id) {
       return(
+        <>
         <Link href="/postTagForm">
           <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -47,6 +51,17 @@ export default function UserPage() {
             登録する
           </button>
         </Link>
+        <div className="my-3 d-flex justify-center">
+          <TwitterShareButton
+            title="わたしについて"
+            hashtags={["わたしについて"]}
+            related={["ZCunkuma"]}
+            url={`${baseUrl}/users/${query.id}`}
+          >
+            <TwitterIcon   className="share-button"/>
+          </TwitterShareButton>
+        </div>
+      </>
       )
     }else{
       return (
@@ -62,6 +77,37 @@ export default function UserPage() {
   }
   return (
     <div>
+      <Head>
+        <title>わたしについて</title>
+        <meta name="description" content="わたしについて" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="og:title"
+          property="og:title"
+          content={`わたしについて`}
+        />
+        <meta
+          name="description"
+          content={`わたしについて紹介します`}
+        />
+        <meta
+          property="og:image"
+          key="ogImage"
+          content={`${baseUrl}/ogp.png`}
+        />
+        <meta
+          name="twitter:card"
+          key="twitterCard"
+          content="summary_large_image"
+        />
+        <meta name="twitter:site" content="@ZCunkuma" />
+        <meta name="twitter:creator" content="@ZCunkuma" />
+        <meta
+          name="twitter:image"
+          key="twitterImage"
+          content={encodeURI(`${baseUrl}/ogp.png`)}
+        />
+      </Head>
       {user ? (
         <>
           <div className="w-90 mx-auto text-center my-10">
