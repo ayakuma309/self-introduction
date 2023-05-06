@@ -18,6 +18,29 @@ export default function UserPage() {
   const [user, setUser] = useState<User | null>(null);
   const query = router.query as Query;
 
+  const CopyUrlButton = () => {
+    const url = `${baseUrl}/users/${query.id}`;
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyClick = async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+      } catch (err) {
+        console.error('Failed to copy URL: ', err);
+      }
+    }
+
+    return (
+      <button
+        onClick={handleCopyClick}
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-2"
+      >
+        {copied ? 'Copied!' : 'Copy URL'}
+      </button>
+    );
+  };
+
   useEffect(() => {
     if (query.id === undefined) {
       return
@@ -44,22 +67,23 @@ export default function UserPage() {
     if (currentUser && currentUser.uid == query.id) {
       return(
         <>
-        <Link href="/postTagForm">
-          <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-            登録する
-          </button>
-        </Link>
-        <div className="my-3 d-flex justify-center">
-          <TwitterShareButton
+        <div className="my-3  d-flex justify-center">
+          <Link href="/postTagForm">
+            <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+              登録する
+            </button>
+          </Link>
+          {/* <TwitterShareButton
             title="わたしについて"
             hashtags={["わたしについて"]}
             related={["ZCunkuma"]}
             url={`${baseUrl}/users/${query.id}`}
           >
             <TwitterIcon   className="share-button"/>
-          </TwitterShareButton>
+          </TwitterShareButton> */}
+          <CopyUrlButton />
         </div>
       </>
       )
