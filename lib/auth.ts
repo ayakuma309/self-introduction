@@ -63,7 +63,6 @@ export const useAuth = (): boolean => {
           await setDoc(userRef, {
             id: uuid(),
             displayName: user.displayName,
-            email: user.email,
           });
         }
       }
