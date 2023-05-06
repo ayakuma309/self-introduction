@@ -1,0 +1,7 @@
+.container{
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  font-family: 'DotGothic16';
+}
