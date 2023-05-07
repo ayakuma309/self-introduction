@@ -72,7 +72,7 @@ const Tags = ({ user }: TagsProps) => {
   return (
     <div className={styles.container}>
       <TagCloud
-        tags={tagCloudTags} minSize={1} maxSize={5} renderer={customRenderer}
+        tags={tagCloudTags} minSize={3} maxSize={5} renderer={customRenderer}
       />
     </div>
   )
