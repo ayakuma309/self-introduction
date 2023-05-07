@@ -5,14 +5,20 @@ import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import Tags from "@/components/Tags";
-import MyHead from "@/components/MyHead";
+import { GetServerSideProps, NextPage } from 'next';
+import Head from "next/head";
 // import { TwitterShareButton,TwitterIcon } from "react-share";
 
 type Query = {
   id: string;
 }
+type Props = {
+  ogImageUrl: string
+  title: string
+  description: string
+}
 
-export default function UserPage() {
+const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
@@ -101,7 +107,28 @@ export default function UserPage() {
   }
   return (
     <div>
-      <MyHead />
+      <Head>
+        <title>{user?.displayName}さんのページ</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={`${user?.displayName}さんのページ`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`${baseUrl}/users/${query.id}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="ZCunkuma" />
+        <meta property="og:image" content={ogImageUrl} />
+
+        <meta
+          name="twitter:card"
+          key="twitterCard"
+          content="summary_large_image"
+        />
+        <meta
+          name="twitter:image"
+          key="twitterImage"
+          content={ogImageUrl}
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {user ? (
         <>
           <div className="w-90 mx-auto text-center my-10">
@@ -121,3 +148,18 @@ export default function UserPage() {
     </div>
   )
 }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // ここでOGP画像のURLを取得する処理を行います。
+  const ogImageUrl: string = 'https://example.com/ogp-image.jpg';
+  const title: string = 'わたしについて';
+  const description: string = '自己紹介します';
+  return {
+    props: {
+      ogImageUrl,
+      title,
+      description
+    },
+  };
+};
+
+export default UserPage;
