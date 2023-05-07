@@ -5,20 +5,13 @@ import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import Tags from "@/components/Tags";
-import { GetServerSideProps, NextPage } from 'next';
 import Head from "next/head";
-// import { TwitterShareButton,TwitterIcon } from "react-share";
 
 type Query = {
   id: string;
 }
-type Props = {
-  ogImageUrl: string
-  title: string
-  description: string
-}
 
-const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
+const UserPage= () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
   const router = useRouter();
@@ -109,14 +102,14 @@ const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
   return (
     <div>
       <Head>
-        <title>{user?.displayName}さんの${title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={`${user?.displayName}さんの${title}`} />
-        <meta property="og:description" content={description} />
+        <title>{user?.displayName}さんのページ</title>
+        <meta name="description" content={`よろしくお願いします`} />
+        <meta property="og:title" content={`${user?.displayName}さんのページ`} />
+        <meta property="og:description" content={`よろしくお願いします`}/>
         <meta property="og:url" content={`${baseUrl}/users/${query.id}`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="ZCunkuma" />
-        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image" content={`${baseUrl}/api/ogp`} />
 
         <meta
           name="twitter:card"
@@ -126,7 +119,7 @@ const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
         <meta
           name="twitter:image"
           key="twitterImage"
-          content={ogImageUrl}
+          content={`${baseUrl}/api/ogp`}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -149,19 +142,5 @@ const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
     </div>
   )
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // ここでOGP画像のURLを取得する処理を行います。
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
-  const ogImageUrl: string = `${baseUrl}/ogp.png`;
-  const title: string = 'わたしについて';
-  const description: string = '自己紹介します';
-  return {
-    props: {
-      ogImageUrl,
-      title,
-      description
-    },
-  };
-};
 
 export default UserPage;
