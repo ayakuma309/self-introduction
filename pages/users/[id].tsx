@@ -5,8 +5,8 @@ import {collection, getDoc, getFirestore, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import Tags from "@/components/Tags";
+import MyHead from "@/components/MyHead";
 // import { TwitterShareButton,TwitterIcon } from "react-share";
-import Head from "next/head";
 
 type Query = {
   id: string;
@@ -101,37 +101,7 @@ export default function UserPage() {
   }
   return (
     <div>
-      <Head>
-        <title>わたしについて</title>
-        <meta name="description" content="わたしについて" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="og:title"
-          property="og:title"
-          content={`わたしについて`}
-        />
-        <meta
-          name="description"
-          content={`わたしについて紹介します`}
-        />
-        <meta
-          property="og:image"
-          key="ogImage"
-          content="https://self-introduction-aboutme.vercel.app/ogp.png"
-        />
-        <meta
-          name="twitter:card"
-          key="twitterCard"
-          content="summary_large_image"
-        />
-        <meta name="twitter:site" content="@ZCunkuma" />
-        <meta name="twitter:creator" content="@ZCunkuma" />
-        <meta
-          name="twitter:image"
-          key="twitterImage"
-          content="https://self-introduction-aboutme.vercel.app/ogp.png"
-        />
-      </Head>
+      <MyHead />
       {user ? (
         <>
           <div className="w-90 mx-auto text-center my-10">
