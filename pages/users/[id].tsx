@@ -20,6 +20,7 @@ type Props = {
 
 const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const query = router.query as Query;
@@ -108,9 +109,9 @@ const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
   return (
     <div>
       <Head>
-        <title>{user?.displayName}さんのページ</title>
+        <title>{user?.displayName}さんの${title}</title>
         <meta name="description" content={description} />
-        <meta property="og:title" content={`${user?.displayName}さんのページ`} />
+        <meta property="og:title" content={`${user?.displayName}さんの${title}`} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={`${baseUrl}/users/${query.id}`} />
         <meta property="og:type" content="website" />
@@ -150,7 +151,8 @@ const UserPage: NextPage<Props> = ({ ogImageUrl, title, description }) => {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // ここでOGP画像のURLを取得する処理を行います。
-  const ogImageUrl: string = 'https://example.com/ogp-image.jpg';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+  const ogImageUrl: string = `${baseUrl}/ogp.png`;
   const title: string = 'わたしについて';
   const description: string = '自己紹介します';
   return {
